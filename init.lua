@@ -5,20 +5,30 @@ vim.cmd("set shiftwidth=2")
 vim.cmd("set wrap")
 vim.g.mapleader = " "
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "diff",
-  callback = function()
-    vim.opt.wrap = true
-  end,
+	pattern = "diff",
+	callback = function()
+		vim.opt.wrap = true
+	end,
 })
 vim.opt.relativenumber = true -- Relative line numbers
 vim.opt.number = true
 -- Decrease window size
 vim.keymap.set("n", "<C-->", ":resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<C-_>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<leader>-", "<Cmd>vertical resize -5<CR>", { desc = "Resize window -5" })
 
 -- Increase window size
-vim.keymap.set("n", "<C-=>", ":resize +2<CR>", { desc = "Increase window height" })
+vim.keymap.set("n", "<leader>=", "<Cmd>vertical resize +5<CR>", { desc = "Resize window +5" })
 vim.keymap.set("n", "<C-+>", ":vertical resize +2<CR>", { desc = "Increase window width" })
+--
+-- Copy to clipboard
+vim.keymap.set("v", "<C-c>", [["+y]])
+
+-- Movement
+vim.keymap.set("n", "<leader>h", "<Cmd>wincmd h<CR>", { desc = "Move cursor to left window" })
+vim.keymap.set("n", "<leader>j", "<Cmd>wincmd j<CR>", { desc = "Move cursor to bottomw window" })
+vim.keymap.set("n", "<leader>k", "<Cmd>wincmd k<CR>", { desc = "Move cursor to top window" })
+vim.keymap.set("n", "<leader>l", "<Cmd>wincmd l<CR>", { desc = "Move cursor to right window" })
+vim.keymap.set("n", "<C-S>", "<Cmd>write<CR>", { desc = "Save buffer" })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
