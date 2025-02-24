@@ -69,16 +69,16 @@ return {
           gitsigns.nav_hunk("prev")
         end
       end)
-      vim.keymap.set("n", "<leader>hr", gitsigns.reset_hunk)
+      vim.keymap.set("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset Hunk" })
 
-      vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk)
+      vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk, { desc = "Preview Hunk" })
 
       vim.keymap.set("n", "<leader>hb", function()
         gitsigns.blame_line({ full = true })
       end)
 
       -- Toggles
-      vim.keymap.set("n", "<leader>tb", gitsigns.toggle_current_line_blame)
+      vim.keymap.set("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle Inline Blame" })
     end,
   },
   {
