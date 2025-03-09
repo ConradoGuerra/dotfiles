@@ -30,6 +30,20 @@ vim.keymap.set("n", "<C-k>", "<Cmd>wincmd k<CR>", { desc = "Move cursor to top w
 vim.keymap.set("n", "<C-l>", "<Cmd>wincmd l<CR>", { desc = "Move cursor to right window" })
 vim.keymap.set("n", "<C-S>", "<Cmd>write<CR>", { desc = "Save buffer" })
 
+-- Copy absolute path
+vim.keymap.set("n", "<leader>cf", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+end)
+
+-- Copy relative path
+vim.keymap.set("n", "<leader>cr", function()
+  vim.fn.setreg("+", vim.fn.expand("%"))
+end)
+
+-- Copy filename only
+vim.keymap.set("n", "<leader>cn", function()
+  vim.fn.setreg("+", vim.fn.expand("%:t"))
+end)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
