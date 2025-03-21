@@ -1,0 +1,8 @@
+{
+    "diagnostics.globals": [
+        "delete_buffers"
+    ],
+    "diagnostics.disable": [
+        "lowercase-global"
+    ]
+}
