@@ -18,6 +18,17 @@ return {
 		notifier = { enabled = true },
 		picker = {
 			enabled = true,
+			matcher = {
+				cwd_bonus = true,
+			},
+			formatters = {
+				file = {
+					filename_first = true,
+					truncate = 120,
+					icon_width = 2,
+					git_status_hl = true,
+				},
+			},
 			layout = {
 				layout = {
 					backdrop = false,
@@ -26,6 +37,7 @@ return {
 					height = 0.95, -- 95% of the editor height
 					min_width = 120,
 					{
+						height = 0.3,
 						box = "vertical",
 						border = "rounded",
 						title = "{title} {live} {flags}",
