@@ -37,12 +37,11 @@ return {
 					height = 0.95, -- 95% of the editor height
 					min_width = 120,
 					{
-						height = 0.3,
 						box = "vertical",
 						border = "rounded",
 						title = "{title} {live} {flags}",
 						{ win = "input", height = 1, border = "bottom" },
-						{ win = "list", border = "none", height = 10 },
+						{ win = "list", border = "none" },
 					},
 					{ win = "preview", title = "{preview}", border = "rounded" },
 				},
