@@ -13,14 +13,14 @@ keymap.set("n", "<C-k>", "<Cmd>wincmd k<CR>", { desc = "Move Cursor to Top Windo
 keymap.set("n", "<C-l>", "<Cmd>wincmd l<CR>", { desc = "Move Cursor to Right Window" })
 
 -- Buffer navigation
-keymap.set("n", "H", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Move to Previous Buffer" })
-keymap.set("n", "L", "<Cmd>BufferLineCycleNext<CR>", { desc = "Move to Next Buffer" })
+keymap.set("n", "H", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Move to Previous Buffer (Tabline Order)" })
+keymap.set("n", "L", "<Cmd>BufferLineCycleNext<CR>", { desc = "Move to Next Buffer (Tabline Order)" })
 
--- Delete Buffers
-keymap.set("n", "<leader>bp", "<cmd>bufferlinetogglepin<cr>", { desc = "Pin current buffer" })
-keymap.set("n", "<leader>bp", "<cmd>bufferlinegroupclose ungrouped<cr>", { desc = "Delete non-pinned buffers" })
-keymap.set("n", "<leader>br", "<cmd>bufferlinecloseright<cr>", { desc = "Delete buffers to the right" })
-keymap.set("n", "<leader>bl", "<cmd>bufferlinecloseleft<cr>", { desc = "Delete buffers to the left" })
+-- Buffer management
+keymap.set("n", "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin Current Buffer" })
+keymap.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", { desc = "Delete Non-Pinned Buffers" })
+keymap.set("n", "<leader>br", "<Cmd>BufferLineCloseRight<CR>", { desc = "Delete Buffers to the Right" })
+keymap.set("n", "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", { desc = "Delete Buffers to the Left" })
 
 -- Save buffer
 keymap.set("n", "<C-S>", "<Cmd>write<CR>", { desc = "Save Buffer" })
