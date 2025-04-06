@@ -27,7 +27,6 @@ return {
 			win = { style = "input" },
 			expand = true,
 		},
-		notifier = { enabled = true },
 		picker = {
 			enabled = true,
 			matcher = {
