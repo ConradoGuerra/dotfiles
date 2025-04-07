@@ -43,18 +43,17 @@ return {
 			layout = {
 				layout = {
 					backdrop = false,
+					width = 0.95,
+					min_width = 80,
+					height = 0.8,
+					min_height = 30,
 					box = "vertical",
-					width = 0.9, -- 90% of the editor width
-					height = 0.95, -- 95% of the editor height
-					min_width = 120,
-					{
-						box = "vertical",
-						border = "rounded",
-						title = "{title} {live} {flags}",
-						{ win = "input", height = 1, border = "bottom" },
-						{ win = "list", border = "none" },
-					},
-					{ win = "preview", title = "{preview}", border = "rounded" },
+					border = "rounded",
+					title = "{title} {live} {flags}",
+					title_pos = "center",
+					{ win = "input", height = 1, border = "bottom" },
+					{ win = "list", border = "none" },
+					{ win = "preview", title = "{preview}", height = 0.4, border = "top" },
 				},
 			},
 		},

@@ -49,11 +49,6 @@ return {
 					bold = true,
 					italic = false,
 				},
-				-- separator_selected = {},
-				-- tab_selected = {},
-				-- background = {},
-				-- indicator_selected = {},
-				-- fill = {},
 			},
 		})
 	end,

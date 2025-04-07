@@ -30,10 +30,11 @@ return {
 				"ts_ls",
 				"html",
 				"cssls",
-        "gopls",
+				"gopls",
 				"tailwindcss",
 				"lua_ls",
 				"graphql",
+				"ruby-lsp",
 			},
 		})
 
