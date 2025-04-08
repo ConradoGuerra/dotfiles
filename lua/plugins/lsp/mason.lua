@@ -34,7 +34,7 @@ return {
 				"tailwindcss",
 				"lua_ls",
 				"graphql",
-				"ruby-lsp",
+				"ruby_lsp",
 			},
 		})
 
