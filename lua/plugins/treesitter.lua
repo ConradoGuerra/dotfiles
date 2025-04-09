@@ -29,6 +29,7 @@ return {
 				"dockerfile",
 				"gitignore",
 				"query",
+        "terraform",
 				"vimdoc",
 				"regex",
 				"vim",
