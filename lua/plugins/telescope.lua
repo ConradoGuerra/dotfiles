@@ -37,6 +37,14 @@ return {
 				},
 			},
 		})
+		telescopeBuiltin = require("telescope.builtin")
+		vim.keymap.set("n", "<leader>fm", function()
+			telescopeBuiltin.marks({
+				previewer = true,
+				show_line = true,
+				layout_config = { width = 0.9 },
+			})
+		end, { desc = "Find Vim Marks" })
 		telescope.load_extension("fzf")
 	end,
 }
