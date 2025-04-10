@@ -1,0 +1,252 @@
+return {
+	"mfussenegger/nvim-dap",
+	dependencies = {
+		"rcarriga/nvim-dap-ui",
+		"nvim-neotest/nvim-nio",
+		"theHamsta/nvim-dap-virtual-text",
+		"rcarriga/cmp-dap",
+		"hrsh7th/nvim-cmp",
+	},
+	keys = {
+		{
+			"<leader>dB",
+			function()
+				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+			end,
+			desc = "Breakpoint Condition",
+		},
+		{
+			"<leader>db",
+			function()
+				require("dap").toggle_breakpoint()
+			end,
+			desc = "Toggle Breakpoint",
+		},
+		{
+			"<leader>dc",
+			function()
+				require("dap").continue()
+			end,
+			desc = "Run/Continue",
+		},
+		{
+			"<leader>dC",
+			function()
+				require("dap").run_to_cursor()
+			end,
+			desc = "Run to Cursor",
+		},
+		{
+			"<leader>dg",
+			function()
+				require("dap").goto_()
+			end,
+			desc = "Go to Line (No Execute)",
+		},
+		{
+			"<leader>di",
+			function()
+				require("dap").step_into()
+			end,
+			desc = "Step Into",
+		},
+		{
+			"<leader>do",
+			function()
+				require("dap").step_out()
+			end,
+			desc = "Step Out",
+		},
+		{
+			"<leader>dO",
+			function()
+				require("dap").step_over()
+			end,
+			desc = "Step Over",
+		},
+		{
+			"<leader>dP",
+			function()
+				require("dap").pause()
+			end,
+			desc = "Pause",
+		},
+		{
+			"<leader>dt",
+			function()
+				require("dap").terminate()
+			end,
+			desc = "Terminate",
+		},
+		{
+			"<leader>du",
+			function()
+				require("dapui").toggle({})
+			end,
+			desc = "Dap UI",
+		},
+		{
+			"<leader>de",
+			function()
+				require("dapui").eval()
+			end,
+			desc = "Eval",
+			mode = { "n", "v" },
+		},
+
+		{
+			"<leader>dr",
+			function()
+				require("dap").repl.toggle()
+			end,
+			desc = "Toggle REPL",
+		},
+	},
+	config = function()
+		local dap = require("dap")
+		local dapui = require("dapui")
+
+		require("nvim-dap-virtual-text").setup()
+		dapui.setup({
+			elements = {
+				{
+					id = "repl",
+          toggle = false,
+				},
+				{
+					id = "breakpoints",
+          toggle = false
+				},
+				{
+					id = "watches",
+					settings = {
+						wrap = true, -- Wrap text in Watches window
+					},
+				},
+				-- Add other elements as needed
+			},
+		})
+
+		for _, adapterType in ipairs({ "node" }) do
+			local pwaType = "pwa-" .. adapterType
+
+			dap.adapters[pwaType] = {
+				type = "server",
+				host = "localhost",
+				port = "${port}",
+				executable = {
+					command = "node",
+					args = {
+						vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+						"${port}",
+					},
+				},
+			}
+
+			-- this allow us to handle launch.json configurations
+			-- which specify type as "node" or "chrome" or "msedge"
+			dap.adapters[adapterType] = function(cb, config)
+				local nativeAdapter = dap.adapters[pwaType]
+
+				config.type = pwaType
+
+				if type(nativeAdapter) == "function" then
+					nativeAdapter(cb, config)
+				else
+					cb(nativeAdapter)
+				end
+			end
+		end
+
+		for _, language in ipairs({ "typescript", "javascript" }) do
+			dap.configurations[language] = {
+				{
+					type = "pwa-node",
+					request = "launch",
+					name = "Launch file using Node.js (nvim-dap)",
+					program = "${file}",
+					cwd = "${workspaceFolder}",
+				},
+				{
+					type = "pwa-node",
+					request = "attach",
+					name = "Attach to process using Node.js (nvim-dap)",
+					processId = require("dap.utils").pick_process,
+					cwd = "${workspaceFolder}",
+				},
+				{
+					type = "pwa-node",
+					request = "launch",
+					name = "Launch file using Node.js with ts-node/register (nvim-dap)",
+					program = "${file}",
+					cwd = "${workspaceFolder}",
+					runtimeArgs = { "-r", "ts-node/register" },
+					sourceMaps = true,
+					timeout = 30000,
+				},
+				{
+					type = "pwa-node",
+					request = "launch",
+					name = "Debug Terminal",
+					runtimeExecutable = "bash",
+					runtimeArgs = function()
+						local cmd = vim.fn.input("Enter full command (e.g., 'yarn start:dev'): ", "npm run start")
+						return { "-c", cmd } -- Runs via bash to handle complex commands
+					end,
+					cwd = "${workspaceFolder}",
+					sourceMaps = true,
+					port = 9229,
+					console = "integratedTerminal",
+					internalConsoleOptions = "neverOpen",
+					skipFiles = { "<node_internals>/**" },
+					outFiles = { "${workspaceFolder}/dist/**/*.js" },
+					timeout = 30000,
+				},
+			}
+		end
+
+		dap.listeners.before.attach.dapui_config = function()
+			dapui.open()
+		end
+		dap.listeners.before.launch.dapui_config = function()
+			dapui.open()
+		end
+		dap.listeners.before.event_terminated.dapui_config = function()
+			dapui.close()
+		end
+		dap.listeners.before.event_exited.dapui_config = function()
+			dapui.close()
+		end
+		-- Configure DAP signs directly (no LazyVim dependency)
+		local signs = {
+			Stopped = { text = "󰁕 ", texthl = "DiagnosticWarn", linehl = "DapStoppedLine" },
+			Breakpoint = { text = " ", texthl = "DiagnosticError" },
+			BreakpointCondition = { text = " ", texthl = "DiagnosticInfo" },
+			BreakpointRejected = { text = " ", texthl = "DiagnosticError" },
+			LogPoint = { text = " ", texthl = "DiagnosticInfo" },
+		}
+		for name, sign in pairs(signs) do
+			vim.fn.sign_define("Dap" .. name, sign)
+		end
+
+		-- Optional: VSCode-like launch.json support
+		require("dap.ext.vscode").load_launchjs()
+
+		require("cmp").setup({
+			enabled = function()
+				return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+			end,
+		})
+
+		require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+			sources = {
+				{ name = "dap" },
+			},
+		})
+		vim.api.nvim_set_hl(0, "DapStoppedLine", {
+			bg = "#45475a",
+			fg = "#f5e0dc",
+			bold = true,
+		})
+	end,
+}
