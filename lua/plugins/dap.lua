@@ -4,8 +4,6 @@ return {
 		"rcarriga/nvim-dap-ui",
 		"nvim-neotest/nvim-nio",
 		"theHamsta/nvim-dap-virtual-text",
-		"rcarriga/cmp-dap",
-		"hrsh7th/nvim-cmp",
 	},
 	keys = {
 		{
@@ -107,25 +105,7 @@ return {
 		local dapui = require("dapui")
 
 		require("nvim-dap-virtual-text").setup()
-		dapui.setup({
-			elements = {
-				{
-					id = "repl",
-          toggle = false,
-				},
-				{
-					id = "breakpoints",
-          toggle = false
-				},
-				{
-					id = "watches",
-					settings = {
-						wrap = true, -- Wrap text in Watches window
-					},
-				},
-				-- Add other elements as needed
-			},
-		})
+		dapui.setup()
 
 		for _, adapterType in ipairs({ "node" }) do
 			local pwaType = "pwa-" .. adapterType
@@ -217,7 +197,13 @@ return {
 		dap.listeners.before.event_exited.dapui_config = function()
 			dapui.close()
 		end
+
 		-- Configure DAP signs directly (no LazyVim dependency)
+		vim.api.nvim_set_hl(0, "DapStoppedLine", {
+			bg = "#45475a",
+			fg = "#f5e0dc",
+			bold = true,
+		})
 		local signs = {
 			Stopped = { text = "󰁕 ", texthl = "DiagnosticWarn", linehl = "DapStoppedLine" },
 			Breakpoint = { text = " ", texthl = "DiagnosticError" },
@@ -231,22 +217,5 @@ return {
 
 		-- Optional: VSCode-like launch.json support
 		require("dap.ext.vscode").load_launchjs()
-
-		require("cmp").setup({
-			enabled = function()
-				return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
-			end,
-		})
-
-		require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-			sources = {
-				{ name = "dap" },
-			},
-		})
-		vim.api.nvim_set_hl(0, "DapStoppedLine", {
-			bg = "#45475a",
-			fg = "#f5e0dc",
-			bold = true,
-		})
 	end,
 }
