@@ -4,6 +4,7 @@ return {
 		"rcarriga/nvim-dap-ui",
 		"nvim-neotest/nvim-nio",
 		"theHamsta/nvim-dap-virtual-text",
+		"leoluz/nvim-dap-go",
 	},
 	keys = {
 		{
@@ -104,9 +105,10 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 
-		require("nvim-dap-virtual-text").setup()
 		dapui.setup()
 
+		require("nvim-dap-virtual-text").setup()
+		require("dap-go").setup()
 		for _, adapterType in ipairs({ "node" }) do
 			local pwaType = "pwa-" .. adapterType
 
