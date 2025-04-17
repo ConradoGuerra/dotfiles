@@ -23,6 +23,18 @@ return {
 				path_display = { "relative" }, -- Just show relative path
 			},
 			pickers = {
+				lsp_implementations = {
+					layout_config = {
+						vertical = {
+							prompt_position = "top", -- Input at the top
+							preview_height = 0.5, -- 50% for preview
+							mirror = true, -- Preview below results
+						},
+					},
+					path_display = { "relative" }, -- Just show relative path
+					show_line = false, -- Hide line numbers
+					trim_text = true, -- Remove surrounding code preview
+				},
 				lsp_references = {
 					layout_config = {
 						vertical = {
