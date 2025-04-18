@@ -49,7 +49,7 @@ return {
 				},
 			},
 		})
-		telescopeBuiltin = require("telescope.builtin")
+		local telescopeBuiltin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>fm", function()
 			telescopeBuiltin.marks({
 				previewer = true,

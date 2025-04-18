@@ -30,23 +30,23 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				"ts_ls",
-				"html",
 				"cssls",
 				"gopls",
-				"tailwindcss",
-				"lua_ls",
 				"graphql",
+				"html",
+				"lua_ls",
 				"ruby_lsp",
+				"tailwindcss",
+				"ts_ls",
 			},
 		})
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
 				"eslint_d",
+				"prettier", -- prettier formatter
 				"rubocop",
+				"stylua", -- lua formatter
 			},
 		})
 
