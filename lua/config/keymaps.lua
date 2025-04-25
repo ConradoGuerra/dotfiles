@@ -22,6 +22,10 @@ keymap.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", { desc 
 keymap.set("n", "<leader>br", "<Cmd>BufferLineCloseRight<CR>", { desc = "Delete Buffers to the Right" })
 keymap.set("n", "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", { desc = "Delete Buffers to the Left" })
 
+-- move (reorder tabs)
+keymap.set("n", "[b", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Buffer Left" })
+keymap.set("n", "]b", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Buffer Right" })
+
 -- Save buffer
 keymap.set("n", "<C-S>", "<Cmd>write<CR>", { desc = "Save Buffer" })
 
