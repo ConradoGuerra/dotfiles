@@ -56,51 +56,20 @@ return {
 					},
 				},
 				layout_strategy = "vertical",
-				layout_config = {
-					vertical = {
-						width = 0.9, -- 90% of the editor width
-						height = 0.95, -- 95% of the editor height
-						preview_height = 0.4, -- 40% of the height for preview at bottom
-						prompt_position = "top", -- input at the top
-						mirror = true, -- Places preview at bottom
-					},
-				},
 				path_display = { "relative" }, -- Just show relative path
-				sorting_strategy = "ascending", -- Make results list populate from top to bottom
 			},
 			pickers = {
 				lsp_definitions = {
-					layout_config = {
-						vertical = {
-							prompt_position = "top", -- Input at the top
-							preview_height = 0.4, -- 40% for preview at bottom
-							mirror = true, -- Preview below results
-						},
-					},
 					path_display = { "relative" }, -- Just show relative path
 					show_line = false, -- Hide line numbers
 					trim_text = true, -- Remove surrounding code preview
 				},
 				lsp_implementations = {
-					layout_config = {
-						vertical = {
-							prompt_position = "top", -- Input at the top
-							preview_height = 0.5, -- 50% for preview
-							mirror = true, -- Preview below results
-						},
-					},
 					path_display = { "relative" }, -- Just show relative path
 					show_line = false, -- Hide line numbers
 					trim_text = true, -- Remove surrounding code preview
 				},
 				lsp_references = {
-					layout_config = {
-						vertical = {
-							prompt_position = "top", -- Input at the top
-							preview_height = 0.5, -- 50% for preview
-							mirror = true, -- Preview below results
-						},
-					},
 					path_display = { "relative" }, -- Just show relative path
 					show_line = false, -- Hide line numbers
 					trim_text = true, -- Remove surrounding code preview

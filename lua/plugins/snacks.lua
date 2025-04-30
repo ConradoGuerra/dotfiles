@@ -26,10 +26,8 @@ return {
 			expand = true,
 		},
 		quickfile = { enabled = true },
-		scope = { enabled = true },
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
-		words = { enabled = true },
 	},
 	init = function()
 		vim.api.nvim_create_autocmd("User", {
