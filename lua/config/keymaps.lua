@@ -17,6 +17,7 @@ keymap.set("n", "H", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Move to Previous 
 keymap.set("n", "L", "<Cmd>BufferLineCycleNext<CR>", { desc = "Move to Next Buffer (Tabline Order)" })
 
 -- Buffer management
+keymap.set("n", "<leader>bd", "<cmd>Bdelete<cr>", { desc = "Delete Current Buffer" })
 keymap.set("n", "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin Current Buffer" })
 keymap.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", { desc = "Delete Non-Pinned Buffers" })
 keymap.set("n", "<leader>br", "<Cmd>BufferLineCloseRight<CR>", { desc = "Delete Buffers to the Right" })
