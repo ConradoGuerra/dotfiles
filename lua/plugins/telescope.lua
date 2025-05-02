@@ -5,6 +5,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
+		"nvim-telescope/telescope-ui-select.nvim",
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -75,10 +76,15 @@ return {
 					trim_text = true, -- Remove surrounding code preview
 				},
 			},
+			extensions = {
+				["ui-select"] = {
+					require("telescope.themes").get_dropdown({}),
+				},
+			},
 		})
 
-		-- Load the fzf extension
 		telescope.load_extension("fzf")
+		telescope.load_extension("ui-select")
 
 		-- Core keymaps
 		vim.keymap.set("n", "<leader><space>", function()
