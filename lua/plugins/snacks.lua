@@ -1,6 +1,8 @@
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
+	lazy = false,
+	---@type snacks.Config
 	opts = {
 		bigfile = { enabled = true },
 		dashboard = {
@@ -28,6 +30,15 @@ return {
 		quickfile = { enabled = true },
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
+	},
+	keys = {
+		{
+			"<leader>gg",
+			function()
+				Snacks.lazygit()
+			end,
+			desc = "Lazygit",
+		},
 	},
 	init = function()
 		vim.api.nvim_create_autocmd("User", {
