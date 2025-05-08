@@ -16,14 +16,13 @@ return {
 			},
 			messages = {
 				enabled = true, -- keep this enabled for other UI elements
-				view = "messages", 
+				view = "messages",
 				view_error = "notify", -- view for errors
 				view_warn = "notify", -- view for warnings
 				view_history = "messages", -- view for :messages
 				view_search = false, -- disable default search count display
 			},
 			routes = {
-				-- Skip all msg_show messages (effectively hiding all notifications)
 				{
 					filter = {
 						event = "msg_show",
