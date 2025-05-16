@@ -80,6 +80,13 @@ return {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown({}),
 				},
+				fzf = {
+					fuzzy = true, -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+					-- the default case_mode is "smart_case"
+				},
 			},
 		})
 
@@ -112,6 +119,17 @@ return {
 		end, { desc = "Find Files (with hidden)" })
 		vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "Find Git Files" })
 		vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
+		vim.keymap.set("n", "<leader>fm", function()
+			builtin.marks({
+				previewer = true,
+				show_line = true,
+				layout_config = { width = 0.9 },
+			})
+		end, { desc = "Find Vim Marks" })
+		vim.keymap.set("n", "<leader>fw", function()
+			local word = vim.fn.expand("<cword>")
+			builtin.grep_string({ search = word })
+		end, { desc = "Find word under cursor" })
 
 		-- Git category
 		vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Git Commits" })
@@ -124,13 +142,6 @@ return {
 		vim.keymap.set("n", "<leader>sc", builtin.command_history, { desc = "Command History" })
 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Help Tags" })
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Keymaps" })
-		vim.keymap.set("n", "<leader>sm", function()
-			builtin.marks({
-				previewer = true,
-				show_line = true,
-				layout_config = { width = 0.9 },
-			})
-		end, { desc = "Find Vim Marks" })
 		vim.keymap.set("n", "<leader>sr", builtin.registers, { desc = "Registers" })
 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "Telescope Pickers" })
 		vim.keymap.set("n", "<leader>st", builtin.colorscheme, { desc = "Colorschemes" })
