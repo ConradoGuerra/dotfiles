@@ -27,6 +27,16 @@ keymap.set("n", "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", { desc = "Delete B
 keymap.set("n", "[b", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Buffer Left" })
 keymap.set("n", "]b", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Buffer Right" })
 
+-- Move buffer to start and end of the buffer list
+keymap.set("n", "<leader>bs", function()
+	require("bufferline").move_to(1)
+end, { desc = "Move buffer to start" })
+
+keymap.set("n", "<leader>be", function()
+	local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+	require("bufferline").move_to(#buffers)
+end, { desc = "Move buffer to end" })
+
 -- Save buffer
 keymap.set("n", "<C-S>", "<Cmd>write<CR>", { desc = "Save Buffer" })
 
