@@ -30,6 +30,12 @@ return {
 
 		lualine.setup({
 			sections = {
+				lualine_c = {
+					{
+						"filename",
+						path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+					},
+				},
 				lualine_x = {
 					search_count, -- Add search count component
 					noice_mode, -- Using the updated API
