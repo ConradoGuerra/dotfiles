@@ -18,7 +18,6 @@ keymap.set("n", "L", "<Cmd>BufferLineCycleNext<CR>", { desc = "Move to Next Buff
 
 -- Buffer management
 keymap.set("n", "<leader>bd", "<cmd>Bdelete<cr>", { desc = "Delete Current Buffer" })
-keymap.set("n", "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", { desc = "Pin Current Buffer" })
 keymap.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", { desc = "Delete Non-Pinned Buffers" })
 keymap.set("n", "<leader>br", "<Cmd>BufferLineCloseRight<CR>", { desc = "Delete Buffers to the Right" })
 keymap.set("n", "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", { desc = "Delete Buffers to the Left" })
@@ -26,16 +25,6 @@ keymap.set("n", "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", { desc = "Delete B
 -- move (reorder tabs)
 keymap.set("n", "[b", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Buffer Left" })
 keymap.set("n", "]b", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Buffer Right" })
-
--- Move buffer to start and end of the buffer list
-keymap.set("n", "<leader>bs", function()
-	require("bufferline").move_to(1)
-end, { desc = "Move buffer to start" })
-
-keymap.set("n", "<leader>be", function()
-	local buffers = vim.fn.getbufinfo({ buflisted = 1 })
-	require("bufferline").move_to(#buffers)
-end, { desc = "Move buffer to end" })
 
 -- Save buffer
 keymap.set("n", "<C-S>", "<Cmd>write<CR>", { desc = "Save Buffer" })
