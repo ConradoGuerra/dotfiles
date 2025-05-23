@@ -131,10 +131,6 @@ return {
 			builtin.grep_string({ search = word })
 		end, { desc = "Find word under cursor" })
 
-		-- Git category
-		vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Git Commits" })
-		vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Git Status" })
-		vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Git Branches" })
 
 		-- Search category
 		vim.keymap.set("n", "<leader>sa", builtin.autocommands, { desc = "Auto Commands" })
