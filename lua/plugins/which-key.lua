@@ -7,7 +7,7 @@ return {
 	end,
 	opts = {
 		map = vim.keymap.set, -- keymap.set function to use
-    preset = "helix",
+		preset = "helix",
 		which_key = true, -- integrate with which-key to show enabled/disabled icons and colors
 		notify = true, -- show a notification when toggling
 		-- icons for enabled/disabled states

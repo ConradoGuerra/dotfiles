@@ -131,7 +131,6 @@ return {
 			builtin.grep_string({ search = word })
 		end, { desc = "Find word under cursor" })
 
-
 		-- Search category
 		vim.keymap.set("n", "<leader>sa", builtin.autocommands, { desc = "Auto Commands" })
 		vim.keymap.set("n", "<leader>sb", builtin.current_buffer_fuzzy_find, { desc = "Buffer Search" })
