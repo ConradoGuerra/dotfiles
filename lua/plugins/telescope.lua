@@ -40,6 +40,7 @@ return {
 								actions.move_selection_previous(prompt_bufnr)
 							end
 						end,
+						["<c-d>"] = actions.delete_buffer,
 					},
 					n = {
 						["<C-f>"] = actions.to_fuzzy_refine,
@@ -54,12 +55,16 @@ return {
 								actions.move_selection_previous(prompt_bufnr)
 							end
 						end,
+						["<c-d>"] = actions.delete_buffer,
 					},
 				},
 				layout_strategy = "vertical",
 				path_display = { "relative" }, -- Just show relative path
 			},
 			pickers = {
+				buffers = {
+					sort_mru = true, -- most recent first
+				},
 				lsp_definitions = {
 					path_display = { "relative" }, -- Just show relative path
 					show_line = false, -- Hide line numbers
