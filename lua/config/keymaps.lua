@@ -12,20 +12,6 @@ keymap.set("n", "<C-j>", "<Cmd>wincmd j<CR>", { desc = "Move Cursor to Bottom Wi
 keymap.set("n", "<C-k>", "<Cmd>wincmd k<CR>", { desc = "Move Cursor to Top Window" })
 keymap.set("n", "<C-l>", "<Cmd>wincmd l<CR>", { desc = "Move Cursor to Right Window" })
 
--- Buffer navigation
-keymap.set("n", "H", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Move to Previous Buffer (Tabline Order)" })
-keymap.set("n", "L", "<Cmd>BufferLineCycleNext<CR>", { desc = "Move to Next Buffer (Tabline Order)" })
-
--- Buffer management
-keymap.set("n", "<leader>bd", "<cmd>Bdelete<cr>", { desc = "Delete Current Buffer" })
-keymap.set("n", "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", { desc = "Delete Non-Pinned Buffers" })
-keymap.set("n", "<leader>br", "<Cmd>BufferLineCloseRight<CR>", { desc = "Delete Buffers to the Right" })
-keymap.set("n", "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", { desc = "Delete Buffers to the Left" })
-
--- move (reorder tabs)
-keymap.set("n", "[b", "<Cmd>BufferLineMovePrev<CR>", { desc = "Move Buffer Left" })
-keymap.set("n", "]b", "<Cmd>BufferLineMoveNext<CR>", { desc = "Move Buffer Right" })
-
 -- Save buffer
 keymap.set("n", "<C-S>", "<Cmd>write<CR>", { desc = "Save Buffer" })
 
