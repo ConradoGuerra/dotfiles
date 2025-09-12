@@ -8,8 +8,9 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
+opt.smartindent = true
 
-opt.wrap = true
+opt.wrap = false
 
 -- search settings
 opt.ignorecase = true
@@ -26,7 +27,10 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
-vim.o.undofile = false -- Save undo history (default: false)
+opt.undofile = false -- Save undo history (default: false)
+
+opt.scrolloff = 10 -- Keep 10 lines above/below cursor
+opt.sidescrolloff = 20 -- Keep 8 columns left/right of cursor
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	pattern = "*",
