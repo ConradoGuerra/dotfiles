@@ -84,8 +84,20 @@ return {
 			"graphql",
 			"lua_ls",
 			"pyright",
+			"ruff",
 		}
 
+		require("lspconfig").pyright.setup({
+			settings = {
+				python = {
+					analysis = {
+						autoSearchPaths = true,
+						diagnosticMode = "workspace", -- Change this from "openFilesOnly"
+						useLibraryCodeForTypes = true,
+					},
+				},
+			},
+		})
 		for _, server in ipairs(servers) do
 			if lspconfig[server] then
 				lspconfig[server].setup({

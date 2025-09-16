@@ -20,6 +20,7 @@ return {
 			require("mason-tool-installer").setup({
 				ensure_installed = {
 					-- LSP servers
+          "pyright",
 					"css-lsp",
 					"gopls",
 					"graphql-language-service-cli",
