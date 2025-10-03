@@ -8,13 +8,6 @@ return {
 	},
 	keys = {
 		{
-			"<leader>dB",
-			function()
-				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-			end,
-			desc = "Breakpoint Condition",
-		},
-		{
 			"<leader>db",
 			function()
 				require("dap").toggle_breakpoint()
@@ -22,11 +15,25 @@ return {
 			desc = "Toggle Breakpoint",
 		},
 		{
+			"<leader>dB",
+			function()
+				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+			end,
+			desc = "Breakpoint Condition",
+		},
+		{
 			"<leader>dc",
 			function()
 				require("dap").continue()
 			end,
 			desc = "Run/Continue",
+		},
+		{
+			"<leader>dx",
+			function()
+				require("dap").clear_breakpoints()
+			end,
+			desc = "Clear Breakpoints",
 		},
 		{
 			"<leader>dC",
@@ -73,7 +80,7 @@ return {
 		{
 			"<leader>dt",
 			function()
-				require("dap").terminate()
+				require("dap").terminate({ all = true })
 			end,
 			desc = "Terminate",
 		},
@@ -159,31 +166,41 @@ return {
 				{
 					type = "pwa-node",
 					request = "launch",
-					name = "Launch file using Node.js with ts-node/register (nvim-dap)",
-					program = "${file}",
-					cwd = "${workspaceFolder}",
-					runtimeArgs = { "-r", "ts-node/register" },
-					sourceMaps = true,
-					timeout = 30000,
-				},
-				{
-					type = "pwa-node",
-					request = "launch",
-					name = "Debug Terminal",
+					name = "Debug: Custom command",
 					runtimeExecutable = "bash",
 					runtimeArgs = function()
-						local cmd = vim.fn.input("Enter full command (e.g., 'yarn start:dev'): ", "npm run start")
+						local cmd = vim.fn.input("Enter command (e.g., 'test:unit'): ")
 						return { "-c", cmd } -- Runs via bash to handle complex commands
 					end,
+					rootPath = "${workspaceFolder}",
 					cwd = "${workspaceFolder}",
-					sourceMaps = true,
-					port = 9229,
 					console = "integratedTerminal",
 					internalConsoleOptions = "neverOpen",
+					sourceMaps = true,
+					port = 9229,
 					skipFiles = { "<node_internals>/**" },
-					outFiles = { "${workspaceFolder}/dist/**/*.js" },
-					timeout = 30000,
+					resolveSourceMapLocations = {
+						"${workspaceFolder}/**",
+						"!**/node_modules/**",
+					},
 				},
+				-- {
+				-- 	type = "pwa-node",
+				-- 	request = "launch",
+				-- 	name = "Debug Terminal",
+				-- 	runtimeExecutable = "bash",
+				-- 	runtimeArgs = function()
+				-- 		local cmd = vim.fn.input("Enter full command (e.g., 'yarn start:dev'): ", "yarn start:dev")
+				-- 		return { "-c", cmd } -- Runs via bash to handle complex commands
+				-- 	end,
+				-- 	cwd = "${workspaceFolder}",
+				-- 	sourceMaps = true,
+				-- 	port = 9229,
+				-- 	console = "integratedTerminal",
+				-- 	internalConsoleOptions = "neverOpen",
+				-- 	skipFiles = { "<node_internals>/**" },
+				-- 	timeout = 30000,
+				-- },
 			}
 		end
 
@@ -216,8 +233,5 @@ return {
 		for name, sign in pairs(signs) do
 			vim.fn.sign_define("Dap" .. name, sign)
 		end
-
-		-- Optional: VSCode-like launch.json support
-		require("dap.ext.vscode").load_launchjs()
 	end,
 }

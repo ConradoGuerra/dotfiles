@@ -10,26 +10,13 @@ return {
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
-		local action_state = require("telescope.actions.state")
 		local builtin = require("telescope.builtin")
-		local function send_to_qf_and_open(prompt_bufnr)
-			local current_picker = action_state.get_current_picker(prompt_bufnr)
-			if not current_picker then
-				return
-			end
-
-			actions.send_selected_to_qflist(prompt_bufnr)
-
-			vim.schedule(function()
-				vim.cmd("copen")
-			end)
-		end
 		telescope.setup({
 			defaults = {
 				mappings = {
 					i = {
+						["<C-w>"] = actions.send_selected_to_qflist + actions.open_qflist,
 						["<C-f>"] = actions.to_fuzzy_refine,
-						["<C-q>"] = send_to_qf_and_open,
 						["<C-j>"] = function(prompt_bufnr)
 							for _ = 1, 5 do -- Jump exactly 5 items
 								actions.move_selection_next(prompt_bufnr)
@@ -40,11 +27,11 @@ return {
 								actions.move_selection_previous(prompt_bufnr)
 							end
 						end,
-						["<c-d>"] = actions.delete_buffer,
+						["<C-c>"] = actions.delete_buffer,
 					},
 					n = {
+						["<C-w>"] = actions.send_selected_to_qflist + actions.open_qflist,
 						["<C-f>"] = actions.to_fuzzy_refine,
-						["<C-q>"] = send_to_qf_and_open,
 						["<C-j>"] = function(prompt_bufnr)
 							for _ = 1, 5 do -- Jump exactly 5 items
 								actions.move_selection_next(prompt_bufnr)
@@ -55,7 +42,7 @@ return {
 								actions.move_selection_previous(prompt_bufnr)
 							end
 						end,
-						["<c-d>"] = actions.delete_buffer,
+						["<C-c>"] = actions.delete_buffer,
 					},
 				},
 				layout_strategy = "vertical",
@@ -145,13 +132,5 @@ return {
 		vim.keymap.set("n", "<leader>sr", builtin.registers, { desc = "Registers" })
 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "Telescope Pickers" })
 		vim.keymap.set("n", "<leader>st", builtin.colorscheme, { desc = "Colorschemes" })
-
-		-- LSP category
-		vim.keymap.set("n", "<leader>ld", builtin.lsp_definitions, { desc = "Goto Definition" })
-		vim.keymap.set("n", "<leader>lr", builtin.lsp_references, { desc = "References" })
-		vim.keymap.set("n", "<leader>li", builtin.lsp_implementations, { desc = "Implementations" })
-		vim.keymap.set("n", "<leader>ls", builtin.lsp_document_symbols, { desc = "Document Symbols" })
-		vim.keymap.set("n", "<leader>lw", builtin.lsp_workspace_symbols, { desc = "Workspace Symbols" })
-		vim.keymap.set("n", "<leader>lS", builtin.lsp_dynamic_workspace_symbols, { desc = "Dynamic Workspace Symbols" })
 	end,
 }
