@@ -118,10 +118,18 @@ return {
 				layout_config = { width = 0.9 },
 			})
 		end, { desc = "Find Vim Marks" })
+
 		vim.keymap.set("n", "<leader>fw", function()
 			local word = vim.fn.expand("<cword>")
-			builtin.grep_string({ search = word })
-		end, { desc = "Find word under cursor" })
+			builtin.live_grep({
+				default_text = word,
+				additional_args = { "--hidden" },
+			})
+			-- Move cursor to end of prompt after opening
+			vim.defer_fn(function()
+				vim.cmd("startinsert!")
+			end, 10)
+		end, { desc = "Find word (can add regex)" })
 
 		-- Search category
 		vim.keymap.set("n", "<leader>sa", builtin.autocommands, { desc = "Auto Commands" })
