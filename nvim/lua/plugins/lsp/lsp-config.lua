@@ -3,107 +3,85 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-		{
-			"antosha417/nvim-lsp-file-operations",
-			config = true,
-		},
-		{
-			"folke/neodev.nvim",
-			opts = {},
-		},
+		{ "antosha417/nvim-lsp-file-operations", config = true },
+		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-		local keymap = vim.keymap -- for conciseness
+		local keymap = vim.keymap
+		local lsp = vim.lsp
+		-- local bufopts = { noremap = true, silent = true }
 
+		-- LspAttach keymaps
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
-				-- Buffer local mappings.
-				-- See `:help vim.lsp.*` for documentation on any of the below functions
 				local opts = { buffer = ev.buf, silent = true }
 
-				-- set keybinds
 				opts.desc = "Show LSP references"
-				keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+				keymap.set("n", "grr", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
 				opts.desc = "Show LSP definitions"
-				keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+				keymap.set("n", "grd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
 
 				opts.desc = "Show LSP implementations"
-				keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+				keymap.set("n", "gri", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
 				opts.desc = "Show LSP type definitions"
-				keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+				keymap.set("n", "grt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
 				opts.desc = "See available code actions"
-				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+				keymap.set({ "n", "v" }, "<leader>ca", lsp.buf.code_action, opts)
 
-				opts.desc = "Smart variable rename"
-				keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts) -- smart rename
+				opts.desc = "Smart rename"
+				keymap.set("n", "<leader>cr", lsp.buf.rename, opts)
 
 				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>P", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show diagnostics for file
+				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
 
 				opts.desc = "Show line diagnostics"
-				keymap.set("n", "<leader>p", vim.diagnostic.open_float, opts) -- show diagnostics for line
+				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
 				opts.desc = "Go to previous diagnostic"
-				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 
 				opts.desc = "Go to next diagnostic"
-				keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+				keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
-				opts.desc = "Show documentation for what is under cursor"
-				keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+				opts.desc = "Hover docs"
+				keymap.set("n", "K", lsp.buf.hover, opts)
 
 				opts.desc = "Restart LSP"
-				keymap.set("n", "<leader>cs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+				keymap.set("n", "<leader>cs", ":LspRestart<CR>", opts)
 			end,
 		})
 
-		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = cmp_nvim_lsp.default_capabilities()
+		-- completion capabilities
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-		-- Change the Diagnostic symbols in the sign column (gutter)
+		-- Base memory limit for Node-based LSPs
+		local NODE_MAX_MEM = "16384" -- 16 GB
+
+		vim.lsp.config("vtsls", {
+			capabilities = capabilities,
+			root_markers = { "tsconfig.json", "package.json", ".git" },
+			settings = {
+				typescript = { tsserver = { maxTsServerMemory = tonumber(NODE_MAX_MEM) } },
+				vtsls = {
+					enableMoveToFileCodeAction = true,
+					experimental = { completion = { enableServerSideFuzzyMatch = true } },
+				},
+			},
+		})
+
+		-- enable servers
+		-- vim.lsp.enable("vtsls")
+		-- vim.lsp.enable({ "lua_ls", "astro", "graphql" })
+
+		-- diagnostic signs
 		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end
-
-		-- Configure LSP servers manually (since we're not using mason-lspconfig)
-		local servers = {
-			"cssls",
-			"ts_ls",
-			"html",
-			"gopls",
-			"ruby_lsp",
-			"tailwindcss",
-			"graphql",
-			"lua_ls",
-			"pyright",
-			"ruff",
-		}
-
-		require("lspconfig").pyright.setup({
-			settings = {
-				python = {
-					analysis = {
-						autoSearchPaths = true,
-						diagnosticMode = "workspace", -- Change this from "openFilesOnly"
-						useLibraryCodeForTypes = true,
-					},
-				},
-			},
-		})
-		for _, server in ipairs(servers) do
-			if lspconfig[server] then
-				lspconfig[server].setup({
-					capabilities = capabilities,
-				})
-			end
 		end
 	end,
 }
