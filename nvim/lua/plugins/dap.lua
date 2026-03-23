@@ -8,91 +8,84 @@ return {
 	},
 	keys = {
 		{
-			"<leader>db",
+			"<leader>bb",
 			function()
 				require("dap").toggle_breakpoint()
 			end,
 			desc = "Toggle Breakpoint",
 		},
 		{
-			"<leader>dB",
+			"<leader>bB",
 			function()
 				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
 			end,
 			desc = "Breakpoint Condition",
 		},
 		{
-			"<leader>dc",
+			"<leader>bc",
 			function()
 				require("dap").continue()
 			end,
 			desc = "Run/Continue",
 		},
 		{
-			"<leader>dx",
+			"<leader>bx",
 			function()
 				require("dap").clear_breakpoints()
 			end,
 			desc = "Clear Breakpoints",
 		},
 		{
-			"<leader>dC",
+			"<leader>bC",
 			function()
 				require("dap").run_to_cursor()
 			end,
 			desc = "Run to Cursor",
 		},
-		{
-			"<leader>dg",
-			function()
-				require("dap").goto_()
-			end,
-			desc = "Go to Line (No Execute)",
-		},
-		{
-			"<leader>di",
+{
+			"<leader>bi",
 			function()
 				require("dap").step_into()
 			end,
 			desc = "Step Into",
 		},
 		{
-			"<leader>do",
+			"<leader>bo",
 			function()
 				require("dap").step_out()
 			end,
 			desc = "Step Out",
 		},
 		{
-			"<leader>dO",
+			"<leader>bO",
 			function()
 				require("dap").step_over()
 			end,
 			desc = "Step Over",
 		},
 		{
-			"<leader>dP",
+			"<leader>bP",
 			function()
 				require("dap").pause()
 			end,
 			desc = "Pause",
 		},
 		{
-			"<leader>dt",
+			"<leader>bt",
 			function()
 				require("dap").terminate({ all = true })
 			end,
 			desc = "Terminate",
 		},
 		{
-			"<leader>du",
+			"<leader>bu",
 			function()
 				require("dapui").toggle({})
 			end,
 			desc = "Dap UI",
 		},
 		{
-			"<leader>de",
+			"<leader>be",
 			function()
 				require("dapui").eval()
 			end,
@@ -101,7 +94,7 @@ return {
 		},
 
 		{
-			"<leader>dr",
+			"<leader>br",
 			function()
 				require("dap").repl.toggle()
 			end,

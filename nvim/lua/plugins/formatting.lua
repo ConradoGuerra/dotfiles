@@ -13,12 +13,12 @@ return {
 				css = { "prettier" },
 				html = { "prettier" },
 				json = { "prettier" },
+				jsonc = { "prettier" },
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 				graphql = { "prettier" },
 				liquid = { "prettier" },
 				lua = { "stylua" },
-				ruby = { "rubocop" },
 			},
 		})
 
@@ -29,6 +29,6 @@ return {
 				timeout_ms = 5000,
 				lsp_format = "first",
 			})
-		end, { desc = "Format file or range (in visual mode)" })
+		end, { desc = "Format file" })
 	end,
 }

@@ -46,7 +46,7 @@ return {
 					},
 				},
 				layout_strategy = "vertical",
-				path_display = { "relative" }, -- Just show relative path
+				path_display = { "relative", "filename_first", "truncate" }, -- Just show relative path
 			},
 			pickers = {
 				buffers = {
