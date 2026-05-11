@@ -42,7 +42,7 @@ return {
 			end,
 			desc = "Run to Cursor",
 		},
-{
+		{
 			"<leader>bi",
 			function()
 				require("dap").step_into()
@@ -73,7 +73,7 @@ return {
 		{
 			"<leader>bt",
 			function()
-				require("dap").terminate({ all = true })
+				require("dap").terminate()
 			end,
 			desc = "Terminate",
 		},
@@ -165,7 +165,6 @@ return {
 						local cmd = vim.fn.input("Enter command (e.g., 'test:unit'): ")
 						return { "-c", cmd } -- Runs via bash to handle complex commands
 					end,
-					rootPath = "${workspaceFolder}",
 					cwd = "${workspaceFolder}",
 					console = "integratedTerminal",
 					internalConsoleOptions = "neverOpen",
@@ -177,23 +176,7 @@ return {
 						"!**/node_modules/**",
 					},
 				},
-				-- {
-				-- 	type = "pwa-node",
-				-- 	request = "launch",
-				-- 	name = "Debug Terminal",
-				-- 	runtimeExecutable = "bash",
-				-- 	runtimeArgs = function()
-				-- 		local cmd = vim.fn.input("Enter full command (e.g., 'yarn start:dev'): ", "yarn start:dev")
-				-- 		return { "-c", cmd } -- Runs via bash to handle complex commands
-				-- 	end,
-				-- 	cwd = "${workspaceFolder}",
-				-- 	sourceMaps = true,
-				-- 	port = 9229,
-				-- 	console = "integratedTerminal",
-				-- 	internalConsoleOptions = "neverOpen",
-				-- 	skipFiles = { "<node_internals>/**" },
-				-- 	timeout = 30000,
-				-- },
+
 			}
 		end
 
