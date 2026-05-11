@@ -110,7 +110,9 @@ return {
 			})
 		end, { desc = "Find Files (with hidden)" })
 		vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "Find Git Files" })
-		vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
+		vim.keymap.set("n", "<leader>fr", function()
+			builtin.oldfiles({ cwd_only = true })
+		end, { desc = "Recent Files" })
 		vim.keymap.set("n", "<leader>fm", function()
 			builtin.marks({
 				previewer = true,
@@ -123,7 +125,16 @@ return {
 			local word = vim.fn.expand("<cword>")
 			builtin.live_grep({
 				default_text = word,
-				additional_args = { "--hidden" },
+				additional_args = {
+					"--hidden",
+					"--no-ignore",
+					"--glob=!node_modules/**",
+					"--glob=!dist/**",
+					"--glob=!.nx/**",
+					"--glob=!.git/**",
+					"--glob=!build/**",
+					"--glob=!coverage/**",
+				},
 			})
 			-- Move cursor to end of prompt after opening
 			vim.defer_fn(function()
